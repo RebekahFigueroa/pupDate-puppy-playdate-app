@@ -9,8 +9,27 @@ import Login from "./Login/Login";
 import Playdates from "./Playdates/Playdates";
 import Profile from "./Profile/Profile";
 
-const darkTheme = createTheme({
-  palette: {},
+const theme = createTheme({
+  palette: {
+    background: {
+      default: "#E9EBF1",
+    },
+  },
+  typography: {
+    fontFamily: [
+      "Nunito",
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(","),
+  },
 });
 
 const BodyContent = () => {
@@ -45,7 +64,7 @@ const BodyContent = () => {
 
 function App() {
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
         {/* <AuthProvider> */}

@@ -3,15 +3,27 @@ import {
   Button,
   Card,
   CardContent,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Grid,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import image from "./dogsPlaying.jpg";
 
 const Login = () => {
+  const [openCreateAccount, setOpenCreateAccount] = useState(false);
+
+  const handleClickOpenCreateAccount = () => {
+    setOpenCreateAccount(true);
+  };
+  const handleCloseCreateAccount = () => {
+    setOpenCreateAccount(false);
+  };
   return (
     <Grid
       container
@@ -74,6 +86,7 @@ const Login = () => {
               Don't have an account yet?{" "}
               <Button
                 variant="text"
+                onClick={handleClickOpenCreateAccount}
                 sx={{
                   textDecoration: "underline",
                   color: "#D09D7C",
@@ -81,6 +94,110 @@ const Login = () => {
               >
                 Sign up
               </Button>
+              <Dialog
+                closeButton
+                open={openCreateAccount}
+                onClose={handleCloseCreateAccount}
+                sx={{ borderRadius: "2rem !important" }}
+              >
+                <DialogTitle
+                  variant="h2"
+                  color={"#90AD67"}
+                  sx={{
+                    backgroundColor: "#F0E6D2",
+                  }}
+                >
+                  <strong>Create an Account</strong>
+                </DialogTitle>
+                <DialogContent
+                  sx={{
+                    backgroundColor: "#F0E6D2",
+                  }}
+                >
+                  <Grid container justifyContent="center">
+                    <TextField
+                      sx={{
+                        width: "80%",
+                        marginBottom: "2rem",
+                        marginTop: "1rem",
+                      }}
+                      id="outlined-multiline-flexible"
+                      variant="filled"
+                      label="Username"
+                      value=""
+                      onChange="{handleTitleChange}"
+                      placeholder=""
+                    />
+                  </Grid>
+                  <Grid container justifyContent="center">
+                    <TextField
+                      sx={{
+                        width: "80%",
+                        marginBottom: "2rem",
+                        marginTop: "1rem",
+                      }}
+                      id="outlined-multiline-flexible"
+                      variant="filled"
+                      label="Password"
+                      value=""
+                      onChange="{handleImageUrlChange}"
+                      placeholder=""
+                    />
+                  </Grid>
+                  <Grid container justifyContent="center" spacing={2}>
+                    <Grid item xs={5}>
+                      <TextField
+                        sx={{
+                          width: "100%",
+                          marginBottom: "2rem",
+                          marginTop: "1rem",
+                        }}
+                        id="outlined-multiline-flexible"
+                        variant="filled"
+                        label="City"
+                        value=""
+                        onChange="{handleTitleChange}"
+                        placeholder=""
+                      />
+                    </Grid>
+                    <Grid item xs={5}>
+                      <TextField
+                        sx={{
+                          width: "100%",
+
+                          marginTop: "1rem",
+                        }}
+                        id="outlined-multiline-flexible"
+                        variant="filled"
+                        label="Zipcode"
+                        value=""
+                        onChange="{handleTitleChange}"
+                        placeholder=""
+                      />
+                    </Grid>
+                  </Grid>
+                </DialogContent>
+                <DialogActions
+                  sx={{
+                    backgroundColor: "#F0E6D2",
+                  }}
+                >
+                  <Grid container justifyContent="center">
+                    <Button
+                      onClick="{handleSubmit}"
+                      size="large"
+                      sx={{
+                        backgroundColor: "#D09D7C",
+                        color: "#FFFFFF",
+                        marginBottom: "2rem",
+                        width: "50%",
+                      }}
+                    >
+                      Sign Up
+                    </Button>
+                  </Grid>
+                </DialogActions>
+              </Dialog>
             </Typography>
             <Stack component="form" sx={{ mt: 4 }}>
               <Grid container direction={"column"} spacing={5}>
@@ -90,7 +207,7 @@ const Login = () => {
                     variant="filled"
                     value=""
                     padding="2rem"
-                    fullWidth
+                    sx={{ width: "80%" }}
                     // onChange={(e) => setFirstName(e.target.value)}
                   ></TextField>
                 </Grid>
@@ -99,23 +216,24 @@ const Login = () => {
                     label="Password"
                     variant="filled"
                     value=""
-                    fullWidth
+                    sx={{ width: "80%" }}
                     // onChange={(e) => setLastName(e.target.value)}
                   ></TextField>
                 </Grid>
-
-                <Button
-                  size="large"
-                  sx={{
-                    backgroundColor: "#D09D7C",
-                    color: "#FFFFFF",
-                    marginTop: "5rem",
-                    marginRight: "3rem",
-                    marginLeft: "5rem",
-                  }}
-                >
-                  Login
-                </Button>
+                <Grid container justifyContent="center">
+                  <Button
+                    size="large"
+                    sx={{
+                      backgroundColor: "#D09D7C",
+                      color: "#FFFFFF",
+                      marginTop: "5rem",
+                      marginLeft: "3rem",
+                      width: "50%",
+                    }}
+                  >
+                    Login
+                  </Button>
+                </Grid>
               </Grid>
             </Stack>
           </CardContent>
