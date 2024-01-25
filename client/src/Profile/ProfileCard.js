@@ -12,7 +12,7 @@ import {
 import React from "react";
 import image from "./dogImage.jpg";
 
-const DogCard = () => {
+const ProfileCard = () => {
   return (
     <Card
       sx={{
@@ -105,7 +105,21 @@ const DogCard = () => {
                 marginBottom: "1rem",
               }}
             >
-              View Playdates
+              Edit Profile
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button
+              size="large"
+              sx={{
+                backgroundColor: "#D09D7C",
+                color: "#FFFFFF",
+                borderRadius: 10,
+                width: "10rem",
+                marginBottom: "1rem",
+              }}
+            >
+              Delete Profile
             </Button>
           </Grid>
         </Grid>
@@ -114,4 +128,4 @@ const DogCard = () => {
   );
 };
 
-export default DogCard;
+export default ProfileCard;
