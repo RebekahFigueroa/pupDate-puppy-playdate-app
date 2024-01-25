@@ -17,15 +17,15 @@ import image from "./googleMaps.png";
 const Dogs = () => {
   const commonStyle = {
     "& .MuiFilledInput-root": {
-      borderRadius: "100px", // Adjust the value as needed
-      backgroundColor: "#FFFFFF", // Set the background color to white
-      border: "none", // Remove the border
+      borderRadius: "100px",
+      backgroundColor: "#FFFFFF",
+      border: "none",
     },
     "& .MuiFilledInput-underline:before": {
-      borderBottom: "none", // Remove the underline
+      borderBottom: "none",
     },
     "& .MuiInputLabel-filled": {
-      transform: "translate(12px, 18px) scale(1)", // Adjust label position
+      transform: "translate(12px, 18px) scale(1)",
     },
   };
 

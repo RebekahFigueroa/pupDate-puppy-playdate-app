@@ -26,6 +26,20 @@ const Profile = () => {
   const handleCloseCreateDog = () => {
     setOpenCreateDog(false);
   };
+
+  const commonStyle = {
+    "& .MuiFilledInput-root": {
+      borderRadius: "100px",
+      backgroundColor: "#FFFFFF",
+      border: "none",
+    },
+    "& .MuiFilledInput-underline:before": {
+      borderBottom: "none",
+    },
+    "& .MuiInputLabel-filled": {
+      transform: "translate(12px, 18px) scale(1)",
+    },
+  };
   return (
     <>
       <NavBar />
@@ -75,6 +89,7 @@ const Profile = () => {
                       width: "27rem",
                       marginRight: "2rem",
                       marginLeft: "2rem",
+                      ...commonStyle,
                     }}
                     id="outlined-multiline-flexible"
                     variant="filled"
@@ -92,6 +107,7 @@ const Profile = () => {
                       marginBottom: "2rem",
                       marginTop: "1rem",
                       width: "17.5rem",
+                      ...commonStyle,
                     }}
                     id="outlined-multiline-flexible"
                     variant="filled"
@@ -125,6 +141,7 @@ const Profile = () => {
                       marginBottom: "2rem",
                       marginTop: "1rem",
                       width: "27rem",
+                      ...commonStyle,
                     }}
                     id="outlined-multiline-flexible"
                     variant="filled"
@@ -137,7 +154,10 @@ const Profile = () => {
               </Grid>
               <Grid container justifyContent="center" spacing={2}>
                 <Grid item>
-                  <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                  <FormControl
+                    variant="filled"
+                    sx={{ m: 1, minWidth: 120, ...commonStyle }}
+                  >
                     <InputLabel id="demo-simple-select-filled-label">
                       Size
                     </InputLabel>
@@ -157,7 +177,10 @@ const Profile = () => {
                   </FormControl>
                 </Grid>
                 <Grid item>
-                  <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                  <FormControl
+                    variant="filled"
+                    sx={{ m: 1, minWidth: 120, ...commonStyle }}
+                  >
                     <InputLabel id="demo-simple-select-filled-label">
                       Age
                     </InputLabel>
@@ -181,7 +204,10 @@ const Profile = () => {
                   </FormControl>
                 </Grid>
                 <Grid item>
-                  <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                  <FormControl
+                    variant="filled"
+                    sx={{ m: 1, minWidth: 120, ...commonStyle }}
+                  >
                     <InputLabel id="demo-simple-select-filled-label">
                       Gender
                     </InputLabel>
@@ -205,6 +231,8 @@ const Profile = () => {
                       marginBottom: "2rem",
                       marginTop: "1rem",
                       width: "27rem",
+                      ...commonStyle,
+                      borderRadius: "1rem !important",
                     }}
                     id="outlined-multiline-flexible"
                     variant="filled"

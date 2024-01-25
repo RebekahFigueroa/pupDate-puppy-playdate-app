@@ -6,13 +6,25 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  Dialog,
+  DialogContent,
+  DialogTitle,
   Grid,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
+import DogPlaydates from "./DogPlaydates";
 import image from "./dogImage.jpg";
 
 const DogCard = () => {
+  const [openViewDogs, setOpenViewDogs] = useState(false);
+
+  const handleClickOpenViewDogs = () => {
+    setOpenViewDogs(true);
+  };
+  const handleCloseViewDogs = () => {
+    setOpenViewDogs(false);
+  };
   return (
     <Card
       sx={{
@@ -97,6 +109,7 @@ const DogCard = () => {
           <Grid item>
             <Button
               size="large"
+              onClick={handleClickOpenViewDogs}
               sx={{
                 backgroundColor: "#D09D7C",
                 color: "#FFFFFF",
@@ -107,6 +120,33 @@ const DogCard = () => {
             >
               View Playdates
             </Button>
+            <Dialog
+              closeButton
+              open={openViewDogs}
+              onClose={handleCloseViewDogs}
+              sx={{ width: "100%", marginLeft: "auto", marginRight: "auto" }}
+            >
+              <DialogTitle
+                variant="h2"
+                color={"#90AD67"}
+                sx={{
+                  backgroundColor: "#F0E6D2",
+                }}
+              >
+                <strong>Maxine's Playdates</strong>
+              </DialogTitle>
+              <DialogContent
+                sx={{
+                  backgroundColor: "#F0E6D2",
+                }}
+              >
+                <DogPlaydates />
+                <DogPlaydates />
+                <DogPlaydates />
+                <DogPlaydates />
+                <DogPlaydates />
+              </DialogContent>
+            </Dialog>
           </Grid>
         </Grid>
       </CardActions>
