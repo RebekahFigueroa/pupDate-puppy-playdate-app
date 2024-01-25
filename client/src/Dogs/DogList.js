@@ -18,7 +18,7 @@ const DogList = () => {
       <CardMedia
         sx={{
           height: 75,
-          borderRadius: "50%", // Use 50% for a circular image
+          borderRadius: "50%",
           width: 75,
         }}
         image={image}
