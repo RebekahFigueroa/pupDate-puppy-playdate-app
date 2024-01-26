@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   
   resources :owners, only: [:index, :show, :create]
-  resources :dogs
+  resources :dogs, only: [:index, :create, :update, :destroy]
   resources :playdates
   resources :rsvps
   resources :comments

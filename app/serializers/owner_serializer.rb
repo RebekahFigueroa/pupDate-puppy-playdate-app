@@ -1,5 +1,5 @@
 class OwnerSerializer < ActiveModel::Serializer
-  attributes :id, :username
+  attributes :id, :username, :city, :zipcode
   has_many :dogs
   has_many :comments
   has_many :playdates
