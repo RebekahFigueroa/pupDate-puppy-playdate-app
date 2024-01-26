@@ -1,5 +1,7 @@
+require_dependency 'owner'
+
 class Playdate < ApplicationRecord
-  belongs_to :owner_id
+  belongs_to :owner
   has_many :rsvps
   has_many :comments
   has_many :dogs, through: :rsvps

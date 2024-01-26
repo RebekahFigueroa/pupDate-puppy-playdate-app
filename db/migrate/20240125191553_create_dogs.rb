@@ -1,7 +1,7 @@
 class CreateDogs < ActiveRecord::Migration[6.1]
   def change
     create_table :dogs do |t|
-      t.references :owner_id, null: false, foreign_key: true
+      t.belongs_to :owner, null: false, foreign_key: true
       t.string :name
       t.string :age
       t.string :breed

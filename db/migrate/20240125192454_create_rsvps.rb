@@ -1,8 +1,8 @@
 class CreateRsvps < ActiveRecord::Migration[6.1]
   def change
     create_table :rsvps, id: false do |t|
-      t.references :dog_id, null: false, foreign_key: true
-      t.references :playdate_id, null: false, foreign_key: true
+      t.belongs_to :dog, null: false, foreign_key: true
+      t.belongs_to :playdate, null: false, foreign_key: true
       t.string :note
 
       t.timestamps
