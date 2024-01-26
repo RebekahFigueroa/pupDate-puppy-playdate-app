@@ -13,10 +13,82 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+
+import { useAuthContext } from "../contexts/AuthContext";
 import image from "./dogsPlaying.jpg";
 
 const Login = () => {
   const [openCreateAccount, setOpenCreateAccount] = useState(false);
+
+  const { create_owner, login } = useAuthContext();
+  const [formDataCreate, setFormDataCreate] = useState({
+    username: "",
+    password: "",
+    city: "",
+    zipcode: "",
+  });
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleUsernameCreateChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setFormDataCreate({
+      ...formDataCreate,
+      username: value,
+    });
+  };
+
+  const handlePasswordCreateChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setFormDataCreate({
+      ...formDataCreate,
+      password: value,
+    });
+  };
+  const handleCityCreateChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setFormDataCreate({
+      ...formDataCreate,
+      city: value,
+    });
+  };
+  const handleZipcodeCreateChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setFormDataCreate({
+      ...formDataCreate,
+      zipcode: value,
+    });
+  };
+
+  const handleUsernameChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setFormData({
+      ...formData,
+      username: value,
+    });
+  };
+
+  const handlePasswordChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setFormData({
+      ...formData,
+      password: value,
+    });
+  };
 
   const handleClickOpenCreateAccount = () => {
     setOpenCreateAccount(true);
@@ -124,8 +196,8 @@ const Login = () => {
                       id="outlined-multiline-flexible"
                       variant="filled"
                       label="Username"
-                      value=""
-                      onChange="{handleTitleChange}"
+                      value={formDataCreate.username}
+                      onChange={handleUsernameCreateChange}
                       placeholder=""
                     />
                   </Grid>
@@ -139,8 +211,9 @@ const Login = () => {
                       id="outlined-multiline-flexible"
                       variant="filled"
                       label="Password"
-                      value=""
-                      onChange="{handleImageUrlChange}"
+                      type="password"
+                      value={formDataCreate.password}
+                      onChange={handlePasswordCreateChange}
                       placeholder=""
                     />
                   </Grid>
@@ -155,8 +228,8 @@ const Login = () => {
                         id="outlined-multiline-flexible"
                         variant="filled"
                         label="City"
-                        value=""
-                        onChange="{handleTitleChange}"
+                        value={formDataCreate.city}
+                        onChange={handleCityCreateChange}
                         placeholder=""
                       />
                     </Grid>
@@ -170,8 +243,8 @@ const Login = () => {
                         id="outlined-multiline-flexible"
                         variant="filled"
                         label="Zipcode"
-                        value=""
-                        onChange="{handleTitleChange}"
+                        value={formDataCreate.zipcode}
+                        onChange={handleZipcodeCreateChange}
                         placeholder=""
                       />
                     </Grid>
@@ -184,13 +257,26 @@ const Login = () => {
                 >
                   <Grid container justifyContent="center">
                     <Button
-                      onClick="{handleSubmit}"
                       size="large"
                       sx={{
                         backgroundColor: "#D09D7C",
                         color: "#FFFFFF",
                         marginBottom: "2rem",
                         width: "50%",
+                      }}
+                      onClick={() => {
+                        create_owner(
+                          formDataCreate.username,
+                          formDataCreate.password,
+                          formDataCreate.city,
+                          formDataCreate.zipcode
+                        );
+                        setFormDataCreate({
+                          username: "",
+                          password: "",
+                          ciy: "",
+                          zipcode: "",
+                        });
                       }}
                     >
                       Sign Up
@@ -205,19 +291,20 @@ const Login = () => {
                   <TextField
                     label="Username"
                     variant="filled"
-                    value=""
+                    value={formData.username}
                     padding="2rem"
                     sx={{ width: "80%" }}
-                    // onChange={(e) => setFirstName(e.target.value)}
+                    onChange={handleUsernameChange}
                   ></TextField>
                 </Grid>
                 <Grid item>
                   <TextField
                     label="Password"
+                    type="password"
                     variant="filled"
-                    value=""
+                    value={formData.password}
                     sx={{ width: "80%" }}
-                    // onChange={(e) => setLastName(e.target.value)}
+                    onChange={handlePasswordChange}
                   ></TextField>
                 </Grid>
                 <Grid container justifyContent="center">
@@ -230,6 +317,7 @@ const Login = () => {
                       marginLeft: "3rem",
                       width: "50%",
                     }}
+                    onClick={() => login(formData.username, formData.password)}
                   >
                     Login
                   </Button>
