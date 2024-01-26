@@ -12,13 +12,26 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Footer from "../NavBar and Footer/Footer";
 import NavBar from "../NavBar and Footer/NavBar";
+import { useAuthContext } from "../contexts/AuthContext";
 import ProfileCard from "./ProfileCard";
 
 const Profile = () => {
   const [openCreateDog, setOpenCreateDog] = useState(false);
+  const { isAuthed: ownerId } = useAuthContext();
+
+  const [dogs, setDogs] = useState([]);
+  useEffect(() => {
+    const fetchDogs = async () => {
+      const response = await fetch(`/dogs?owner_id=${ownerId}`);
+      const data = await response.json();
+      setDogs(data);
+    };
+
+    fetchDogs();
+  }, [ownerId]);
 
   const handleClickOpenCreateDog = () => {
     setOpenCreateDog(true);
@@ -26,6 +39,121 @@ const Profile = () => {
   const handleCloseCreateDog = () => {
     setOpenCreateDog(false);
   };
+
+  const [formData, setFormData] = useState({
+    name: "",
+    age: "",
+    breed: "",
+    gender: "",
+    size: "",
+    description: "",
+    image: "",
+  });
+
+  const handleDogNameChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setFormData({
+      ...formData,
+      name: value,
+    });
+  };
+
+  const handleDogAgeChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setFormData({
+      ...formData,
+      age: value,
+    });
+  };
+
+  const handleDogBreedChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setFormData({
+      ...formData,
+      breed: value,
+    });
+  };
+
+  const handleDogGenderChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setFormData({
+      ...formData,
+      gender: value,
+    });
+  };
+
+  const handleDogSizeChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setFormData({
+      ...formData,
+      size: value,
+    });
+  };
+
+  const handleDogDescriptionChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setFormData({
+      ...formData,
+      description: value,
+    });
+  };
+
+  const handleDogImageChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setFormData({
+      ...formData,
+      image: value,
+    });
+  };
+
+  const handleSubmit = async () => {
+    const response = await fetch(`/dogs?owner_id=${ownerId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    const dog = await response.json();
+
+    setDogs((dogs) => [...dogs, dog]);
+    setFormData({
+      name: "",
+      age: "",
+      breed: "",
+      gender: "",
+      size: "",
+      description: "",
+      image: "",
+      owner_id: ownerId,
+    });
+    handleCloseCreateDog();
+  };
+
+  const fetchDogs = useCallback(async () => {
+    const response = await fetch(`/dogs?owner_id=${ownerId}`);
+    const data = await response.json();
+    setDogs(data);
+  }, []);
+
+  useEffect(() => {
+    fetchDogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const commonStyle = {
     "& .MuiFilledInput-root": {
@@ -35,9 +163,6 @@ const Profile = () => {
     },
     "& .MuiFilledInput-underline:before": {
       borderBottom: "none",
-    },
-    "& .MuiInputLabel-filled": {
-      transform: "translate(12px, 18px) scale(1)",
     },
   };
   return (
@@ -94,8 +219,8 @@ const Profile = () => {
                     id="outlined-multiline-flexible"
                     variant="filled"
                     label="Name"
-                    value=""
-                    onChange="{handleTitleChange}"
+                    value={formData.name}
+                    onChange={handleDogNameChange}
                     placeholder=""
                   />
                 </Grid>
@@ -112,8 +237,8 @@ const Profile = () => {
                     id="outlined-multiline-flexible"
                     variant="filled"
                     label="image"
-                    value=""
-                    onChange="{handleTitleChange}"
+                    value={formData.image}
+                    onChange={handleDogImageChange}
                     placeholder=""
                   />
                 </Grid>
@@ -146,8 +271,8 @@ const Profile = () => {
                     id="outlined-multiline-flexible"
                     variant="filled"
                     label="Breed"
-                    value=""
-                    onChange="{handleTitleChange}"
+                    value={formData.breed}
+                    onChange={handleDogBreedChange}
                     placeholder=""
                   />
                 </Grid>
@@ -164,8 +289,8 @@ const Profile = () => {
                     <Select
                       labelId="demo-simple-select-filled-label"
                       id="demo-simple-select-filled"
-                      value="{age}"
-                      onChange="{handleChange}"
+                      value={formData.size}
+                      onChange={handleDogSizeChange}
                     >
                       <MenuItem value=""></MenuItem>
                       <MenuItem value="xs">xs (2-10 lbs)</MenuItem>
@@ -187,8 +312,8 @@ const Profile = () => {
                     <Select
                       labelId="demo-simple-select-filled-label"
                       id="demo-simple-select-filled"
-                      value="{age}"
-                      onChange="{handleChange}"
+                      value={formData.age}
+                      onChange={handleDogAgeChange}
                     >
                       <MenuItem value=""></MenuItem>
                       <MenuItem value="Puppy">
@@ -214,8 +339,8 @@ const Profile = () => {
                     <Select
                       labelId="demo-simple-select-filled-label"
                       id="demo-simple-select-filled"
-                      value="{age}"
-                      onChange="{handleChange}"
+                      value={formData.gender}
+                      onChange={handleDogGenderChange}
                     >
                       <MenuItem value=""></MenuItem>
                       <MenuItem value="male"> Male </MenuItem>
@@ -239,8 +364,8 @@ const Profile = () => {
                     multiline
                     rows={3}
                     label="About"
-                    value=""
-                    onChange="{handleTitleChange}"
+                    value={formData.description}
+                    onChange={handleDogDescriptionChange}
                     placeholder=""
                   />
                 </Grid>
@@ -253,7 +378,7 @@ const Profile = () => {
             >
               <Grid container justifyContent="center">
                 <Button
-                  onClick="{handleSubmit}"
+                  onClick={handleSubmit}
                   size="large"
                   sx={{
                     backgroundColor: "#D09D7C",
@@ -263,7 +388,7 @@ const Profile = () => {
                     borderRadius: 10,
                   }}
                 >
-                  Sign Up
+                  Add Pup
                 </Button>
               </Grid>
             </DialogActions>
@@ -278,30 +403,11 @@ const Profile = () => {
             justifyContent: "center",
           }}
         >
-          <Grid item>
-            <ProfileCard />
-          </Grid>
-          <Grid item>
-            <ProfileCard />
-          </Grid>
-          <Grid item>
-            <ProfileCard />
-          </Grid>
-          <Grid item>
-            <ProfileCard />
-          </Grid>
-          <Grid item>
-            <ProfileCard />
-          </Grid>
-          <Grid item>
-            <ProfileCard />
-          </Grid>
-          <Grid item>
-            <ProfileCard />
-          </Grid>
-          <Grid item>
-            <ProfileCard />
-          </Grid>
+          {dogs.map((dog) => (
+            <Grid item key={dog.id}>
+              <ProfileCard dog={dog} setDogs={setDogs} />
+            </Grid>
+          ))}
         </Grid>
       </Grid>
       <Footer />

@@ -3,8 +3,9 @@ require_dependency 'owner'
 class Dog < ApplicationRecord
   belongs_to :owner
 
-  has_many :playdates, through: :rsvps
   has_many :rsvps
+  has_many :playdates, through: :rsvps
+
 
   validates :name, presence: true
   validates :age, presence: true

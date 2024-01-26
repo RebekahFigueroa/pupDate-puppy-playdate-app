@@ -3,7 +3,8 @@ class DogSerializer < ActiveModel::Serializer
 
   belongs_to :owner
 
-  has_many :playdates, through: :rsvps
   has_many :rsvps
+  has_many :playdates, through: :rsvps
+  
 
 end

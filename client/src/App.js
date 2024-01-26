@@ -72,7 +72,7 @@ function App() {
   // for debugging when creating controller
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("/owners");
+      const response = await fetch("/dogs/1");
       const json = await response.json();
       console.log(json);
     };

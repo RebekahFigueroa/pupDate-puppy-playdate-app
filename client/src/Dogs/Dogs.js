@@ -8,13 +8,28 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../NavBar and Footer/Footer";
 import NavBar from "../NavBar and Footer/NavBar";
+import { useAuthContext } from "../contexts/AuthContext";
 import DogCard from "./DogCard";
 import image from "./googleMaps.png";
 
 const Dogs = () => {
+  const [openCreateDog, setOpenCreateDog] = useState(false);
+  const { isAuthed: ownerId } = useAuthContext();
+
+  const [dogs, setDogs] = useState([]);
+  useEffect(() => {
+    const fetchDogs = async () => {
+      const response = await fetch(`/dogs?owner_id=${ownerId}`);
+      const data = await response.json();
+      setDogs(data);
+    };
+
+    fetchDogs();
+  }, [ownerId]);
+
   const commonStyle = {
     "& .MuiFilledInput-root": {
       borderRadius: "100px",
@@ -23,9 +38,6 @@ const Dogs = () => {
     },
     "& .MuiFilledInput-underline:before": {
       borderBottom: "none",
-    },
-    "& .MuiInputLabel-filled": {
-      transform: "translate(12px, 18px) scale(1)",
     },
   };
 
