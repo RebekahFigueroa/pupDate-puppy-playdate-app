@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   
   resources :owners, only: [:index, :show, :create]
   resources :dogs, only: [:index, :show, :create, :update, :destroy]
-  resources :playdates
-  resources :rsvps
+  resources :playdates, only: [:index, :show, :create, :update, :destroy]
+  resources :rsvps, only: [:index, :show, :create, :update, :destroy]
   resources :comments
 
   get "/auth", to: "auth#auth"

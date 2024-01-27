@@ -12,12 +12,21 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DogPlaydates from "./DogPlaydates";
-import image from "./dogImage.jpg";
 
-const DogCard = () => {
+const DogCard = ({ dog }) => {
   const [openViewDogs, setOpenViewDogs] = useState(false);
+  const [playdates, setPlaydates] = useState([]);
+  useEffect(() => {
+    const fetchPlaydates = async () => {
+      const response = await fetch(`/playdates?dog_id=${dog.id}`);
+      const data = await response.json();
+      setPlaydates(data);
+    };
+
+    fetchPlaydates();
+  }, [dog.id]);
 
   const handleClickOpenViewDogs = () => {
     setOpenViewDogs(true);
@@ -40,11 +49,11 @@ const DogCard = () => {
         component="div"
         sx={{ marginTop: "2rem", color: "#725A56" }}
       >
-        <strong>Maxine</strong>
+        <strong>{dog.name}</strong>
       </Typography>
       <CardMedia
         sx={{ height: 140, borderRadius: "100%", width: 140, margin: "auto" }}
-        image={image}
+        image={dog.image}
         title="green iguana"
       />
       <CardContent>
@@ -57,7 +66,7 @@ const DogCard = () => {
                 color="#725A56"
                 sx={{ marginLeft: "0.5rem" }}
               >
-                3 years old
+                {dog.age}
               </Typography>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -67,7 +76,7 @@ const DogCard = () => {
                 color="#725A56"
                 sx={{ marginLeft: "0.5rem" }}
               >
-                Female
+                {dog.gender}
               </Typography>
             </Box>
             <Grid />
@@ -80,7 +89,7 @@ const DogCard = () => {
                 color="#725A56"
                 sx={{ marginLeft: "0.5rem" }}
               >
-                Corgie
+                {dog.breed}
               </Typography>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -90,7 +99,7 @@ const DogCard = () => {
                 color="#725A56"
                 sx={{ marginLeft: "0.5rem" }}
               >
-                Small
+                {dog.size}
               </Typography>
             </Box>
           </Grid>
@@ -100,8 +109,7 @@ const DogCard = () => {
           color="#D09D7C"
           sx={{ marginLeft: "0.5rem", marginTop: "2rem" }}
         >
-          "Energetic little puppy who loves to play with her friends and chase
-          tennis balls for hours on end!"
+          {dog.description}
         </Typography>
       </CardContent>
       <CardActions>
@@ -133,18 +141,21 @@ const DogCard = () => {
                   backgroundColor: "#F0E6D2",
                 }}
               >
-                <strong>Maxine's Playdates</strong>
+                <strong>{dog.name}'s Playdates</strong>
               </DialogTitle>
               <DialogContent
                 sx={{
                   backgroundColor: "#F0E6D2",
                 }}
               >
-                <DogPlaydates />
-                <DogPlaydates />
-                <DogPlaydates />
-                <DogPlaydates />
-                <DogPlaydates />
+                {playdates.map((playdate) => (
+                  <Grid item key={playdate.id}>
+                    <DogPlaydates
+                      playdate={playdate}
+                      setPlaydates={setPlaydates}
+                    />
+                  </Grid>
+                ))}
               </DialogContent>
             </Dialog>
           </Grid>

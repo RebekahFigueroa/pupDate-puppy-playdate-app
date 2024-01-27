@@ -5,5 +5,5 @@ class Rsvp < ApplicationRecord
   belongs_to :dog
   belongs_to :playdate
 
-  validates :note, presence: true, length: { maximum: 300 }
+  validates :note, length: { maximum: 300 }
 end

@@ -11,24 +11,20 @@ import {
 import React, { useEffect, useState } from "react";
 import Footer from "../NavBar and Footer/Footer";
 import NavBar from "../NavBar and Footer/NavBar";
-import { useAuthContext } from "../contexts/AuthContext";
 import DogCard from "./DogCard";
 import image from "./googleMaps.png";
 
 const Dogs = () => {
-  const [openCreateDog, setOpenCreateDog] = useState(false);
-  const { isAuthed: ownerId } = useAuthContext();
-
   const [dogs, setDogs] = useState([]);
   useEffect(() => {
     const fetchDogs = async () => {
-      const response = await fetch(`/dogs?owner_id=${ownerId}`);
+      const response = await fetch(`/dogs`);
       const data = await response.json();
       setDogs(data);
     };
 
     fetchDogs();
-  }, [ownerId]);
+  }, []);
 
   const commonStyle = {
     "& .MuiFilledInput-root": {
@@ -63,7 +59,7 @@ const Dogs = () => {
             <Select
               labelId="demo-simple-select-filled-label"
               id="demo-simple-select-filled"
-              value="{age}"
+              value=""
               onChange="{handleChange}"
             >
               <MenuItem value=""></MenuItem>
@@ -82,7 +78,7 @@ const Dogs = () => {
             <Select
               labelId="demo-simple-select-filled-label"
               id="demo-simple-select-filled"
-              value="{age}"
+              value=""
               onChange="{handleChange}"
             >
               <MenuItem value=""></MenuItem>
@@ -144,24 +140,11 @@ const Dogs = () => {
               maxHeight: "75vh",
             }}
           >
-            <Grid item>
-              <DogCard />
-            </Grid>
-            <Grid item>
-              <DogCard />
-            </Grid>
-            <Grid item>
-              <DogCard />
-            </Grid>
-            <Grid item>
-              <DogCard />
-            </Grid>
-            <Grid item>
-              <DogCard />
-            </Grid>
-            <Grid item>
-              <DogCard />
-            </Grid>
+            {dogs.map((dog) => (
+              <Grid item key={dog.id}>
+                <DogCard dog={dog} />
+              </Grid>
+            ))}
           </Grid>
           <Grid item xs={3} sx={{ height: "80vh" }}>
             <Box

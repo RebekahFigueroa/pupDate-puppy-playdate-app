@@ -56,6 +56,7 @@ const BodyContent = () => {
       <Box sx={{ height: "100vh" }}>
         <Routes>
           <Route path="/" Component={isAuthed ? Home : Login} exact />
+          <Route path="/home" Component={Home} />
           <Route path="/playdates" Component={Playdates} />
           <Route path="/profile" Component={Profile} />
           <Route path="/dogs" Component={Dogs} />
@@ -72,7 +73,7 @@ function App() {
   // for debugging when creating controller
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("/dogs/1");
+      const response = await fetch(`playdates?dog_id=${1}`);
       const json = await response.json();
       console.log(json);
     };

@@ -13,23 +13,76 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { useAuthContext } from "../contexts/AuthContext";
 import DogList from "./DogList";
 
-const DogPlaydates = () => {
-  const commonStyle = {
-    "& .MuiFilledInput-root": {
-      borderRadius: "100px",
-      backgroundColor: "#FFFFFF",
-      border: "none",
-    },
-    "& .MuiFilledInput-underline:before": {
-      borderBottom: "none",
-    },
-    "& .MuiInputLabel-filled": {
-      transform: "translate(12px, 18px) scale(1)",
-    },
+const commonStyle = {
+  "& .MuiFilledInput-root": {
+    borderRadius: "100px",
+    backgroundColor: "#FFFFFF",
+    border: "none",
+  },
+  "& .MuiFilledInput-underline:before": {
+    borderBottom: "none",
+  },
+};
+
+const DogPlaydates = ({ playdate, setPlaydates }) => {
+  const { isAuthed: ownerId } = useAuthContext();
+  const [dogs, setDogs] = useState([]);
+  useEffect(() => {
+    const fetchDogs = async () => {
+      const response = await fetch(`/dogs?owner_id=${ownerId}`);
+      const data = await response.json();
+      setDogs(data);
+    };
+
+    fetchDogs();
+  }, [ownerId]);
+
+  const [formData, setFormData] = useState({
+    note: "",
+    playdate_id: playdate.id,
+    dog_id: "",
+  });
+
+  const handleSubmit = async () => {
+    const response = await fetch(`/rsvps`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const rsvp = await response.json();
+
+    if (!rsvp?.dog?.id) {
+      // show an error
+      return;
+    }
+
+    setFormData({
+      note: "",
+      playdate_id: playdate.id,
+      dog_id: "",
+    });
+
+    setPlaydates((playdates) => {
+      const editedPlaydate = playdates.find((p) => p.id === playdate.id);
+      if (editedPlaydate) {
+        editedPlaydate.dogs.push(rsvp.dog);
+      }
+
+      return [...playdates];
+    });
   };
+
+  const myDogs = dogs.filter(
+    (dog) => !playdate.dogs.some((existingDog) => existingDog.id === dog.id)
+  );
 
   return (
     <Grid
@@ -52,7 +105,7 @@ const DogPlaydates = () => {
               color="#725A56"
               sx={{ marginLeft: "0.5rem" }}
             >
-              <strong> SarahLovesMaxine </strong>
+              <strong> {playdate.owner.username} </strong>
             </Typography>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -62,7 +115,7 @@ const DogPlaydates = () => {
               color="#725A56"
               sx={{ marginLeft: "0.5rem" }}
             >
-              January 27th, 2024
+              {new Date(playdate.date).toLocaleDateString()}
             </Typography>
           </Box>
         </Grid>
@@ -74,7 +127,7 @@ const DogPlaydates = () => {
               color="#725A56"
               sx={{ marginLeft: "0.5rem" }}
             >
-              Green Dog Park
+              {playdate.location}
             </Typography>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -84,17 +137,17 @@ const DogPlaydates = () => {
               color="#725A56"
               sx={{ marginLeft: "0.5rem" }}
             >
-              9:30 AM
+              {moment(playdate.time).utc().format("h:mm A")}
             </Typography>
           </Box>
         </Grid>
       </Grid>
       <Grid container justifyContent="center">
-        <DogList />
-        <DogList />
-        <DogList />
-        <DogList />
-        <DogList />
+        {playdate.dogs.map((dog) => (
+          <Grid item key={dog.id}>
+            <DogList dog={dog} />
+          </Grid>
+        ))}
       </Grid>
 
       <Grid container sx={{ marginTop: "2rem", display: "flex" }}>
@@ -108,21 +161,33 @@ const DogPlaydates = () => {
           <Select
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
-            value="{age}"
-            onChange="{handleChange}"
+            value={formData.dog_id}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                dog_id: e.target.value,
+              })
+            }
           >
-            <MenuItem value=""></MenuItem>
-            <MenuItem value="Maxine"> Maxine </MenuItem>
-            <MenuItem value="Greg"> Greg</MenuItem>
-            <MenuItem value="Twix"> Twix</MenuItem>
+            {myDogs.length === 0 && (
+              <MenuItem value="">You're already signed up!</MenuItem>
+            )}
+            {myDogs.map((dog) => (
+              <MenuItem value={dog.id}>{dog.name}</MenuItem>
+            ))}
           </Select>
         </FormControl>
         <TextField
           id="outlined-multiline-flexible"
           variant="filled"
           label="Leave a note!"
-          value=""
-          onChange="{handleTitleChange}"
+          value={formData.note}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              note: e.target.value,
+            })
+          }
           placeholder=""
           borderBottom="none"
           sx={{
@@ -133,7 +198,7 @@ const DogPlaydates = () => {
         />
         <Button
           size="small"
-          // onClick={handleClickOpenCreateDog}
+          onClick={handleSubmit}
           sx={{
             backgroundColor: "#D09D7C",
             color: "#FFFFFF",

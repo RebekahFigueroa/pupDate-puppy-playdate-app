@@ -18,7 +18,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../NavBar and Footer/Footer";
 import NavBar from "../NavBar and Footer/NavBar";
 import PlaydateList from "./PlaydateList";
@@ -34,9 +34,6 @@ const Playdates = () => {
     "& .MuiFilledInput-underline:before": {
       borderBottom: "none",
     },
-    "& .MuiInputLabel-filled": {
-      transform: "translate(12px, 18px) scale(1)",
-    },
   };
 
   const [openCreatePlaydate, setOpenCreatePlaydate] = useState(false);
@@ -47,6 +44,26 @@ const Playdates = () => {
   const handleCloseCreatePlaydate = () => {
     setOpenCreatePlaydate(false);
   };
+
+  const [playdates, setPlaydates] = useState([]);
+  useEffect(() => {
+    const fetchPlaydates = async () => {
+      const response = await fetch(`/playdates`);
+      const data = await response.json();
+      setPlaydates(data);
+    };
+
+    fetchPlaydates();
+  }, []);
+
+  const [formData, setFormData] = useState({
+    location: "",
+    date: "",
+    time: "",
+    size_limit: "",
+    age_limit: "",
+    playdate_size_limit: "",
+  });
 
   return (
     <>
@@ -81,8 +98,8 @@ const Playdates = () => {
                   <MenuItem value="xs">xs (2-10 lbs)</MenuItem>
                   <MenuItem value="small">small (10- 20 lbs)</MenuItem>
                   <MenuItem value="medium">medium (21-50 lbs)</MenuItem>
-                  <MenuItem value="large">xs (50-80lbs)</MenuItem>
-                  <MenuItem value="xl">xs (&gt;80 lbs)</MenuItem>
+                  <MenuItem value="large">large (50-80lbs)</MenuItem>
+                  <MenuItem value="xl">xlarge (&gt;80 lbs)</MenuItem>
                 </Select>
               </FormControl>
 
@@ -315,6 +332,7 @@ const Playdates = () => {
                             onChange="{handleChange}"
                           >
                             <MenuItem value=""></MenuItem>
+                            <MenuItem value="">No size limit</MenuItem>
                             <MenuItem value="xs">xs (2-10 lbs)</MenuItem>
                             <MenuItem value="small">
                               small (10- 20 lbs)
@@ -342,6 +360,7 @@ const Playdates = () => {
                             onChange="{handleChange}"
                           >
                             <MenuItem value=""></MenuItem>
+                            <MenuItem value=""> No age limit </MenuItem>
                             <MenuItem value="Puppy">
                               {" "}
                               Puppy (&lt;1 year old){" "}
@@ -397,12 +416,14 @@ const Playdates = () => {
             }}
           >
             <Grid item>
-              <PlaydateList />
-              <PlaydateList />
-              <PlaydateList />
-              <PlaydateList />
-              <PlaydateList />
-              <PlaydateList />
+              {playdates.map((playdate) => (
+                <Grid item key={playdate.id}>
+                  <PlaydateList
+                    playdate={playdate}
+                    setPlaydates={setPlaydates}
+                  />
+                </Grid>
+              ))}
             </Grid>
           </Grid>
           <Grid item xs={5} sx={{ height: "80vh" }}>

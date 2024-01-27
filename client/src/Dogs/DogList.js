@@ -1,8 +1,9 @@
 import { Box, CardMedia, Typography } from "@mui/material";
 import React from "react";
-import image from "./dogImage.jpg";
 
-const DogList = () => {
+const DogList = ({ dog }) => {
+  if (!dog) return null;
+
   return (
     <Box
       sx={{
@@ -13,7 +14,7 @@ const DogList = () => {
       }}
     >
       <Typography variant="h6" color="#725A56">
-        Maxine
+        {dog.name}
       </Typography>
       <CardMedia
         sx={{
@@ -21,7 +22,7 @@ const DogList = () => {
           borderRadius: "50%",
           width: 75,
         }}
-        image={image}
+        image={dog.image}
         title="Maxine's Image"
       />
     </Box>
