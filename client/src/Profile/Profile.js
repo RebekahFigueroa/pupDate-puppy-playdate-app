@@ -17,10 +17,23 @@ import Footer from "../NavBar and Footer/Footer";
 import NavBar from "../NavBar and Footer/NavBar";
 import { useAuthContext } from "../contexts/AuthContext";
 import ProfileCard from "./ProfileCard";
+import UploadImage from "./UploadImage";
+
+const commonStyle = {
+  "& .MuiFilledInput-root": {
+    borderRadius: "100px",
+    backgroundColor: "#FFFFFF",
+    border: "none",
+  },
+  "& .MuiFilledInput-underline:before": {
+    borderBottom: "none",
+  },
+};
 
 const Profile = () => {
   const [openCreateDog, setOpenCreateDog] = useState(false);
   const { isAuthed: ownerId } = useAuthContext();
+  const [imageUpload, setImageUpload] = useState();
 
   const [dogs, setDogs] = useState([]);
   useEffect(() => {
@@ -48,6 +61,7 @@ const Profile = () => {
     size: "",
     description: "",
     image: "",
+    owner_id: ownerId,
   });
 
   const handleDogNameChange = (event) => {
@@ -110,18 +124,8 @@ const Profile = () => {
     });
   };
 
-  const handleDogImageChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setFormData({
-      ...formData,
-      image: value,
-    });
-  };
-
   const handleSubmit = async () => {
-    const response = await fetch(`/dogs?owner_id=${ownerId}`, {
+    const response = await fetch(`/dogs`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -155,16 +159,14 @@ const Profile = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const commonStyle = {
-    "& .MuiFilledInput-root": {
-      borderRadius: "100px",
-      backgroundColor: "#FFFFFF",
-      border: "none",
-    },
-    "& .MuiFilledInput-underline:before": {
-      borderBottom: "none",
-    },
-  };
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      image: imageUpload,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [imageUpload]);
+
   return (
     <>
       <NavBar />
@@ -237,25 +239,12 @@ const Profile = () => {
                     id="outlined-multiline-flexible"
                     variant="filled"
                     label="image"
-                    value={formData.image}
-                    onChange={handleDogImageChange}
+                    value={imageUpload}
                     placeholder=""
                   />
                 </Grid>
                 <Grid item>
-                  <Button
-                    onClick="{handleSubmit}"
-                    size="large"
-                    sx={{
-                      backgroundColor: "#D09D7C",
-                      color: "#FFFFFF",
-                      marginTop: "1.5rem",
-                      width: "100%",
-                      borderRadius: 10,
-                    }}
-                  >
-                    Upload Image
-                  </Button>
+                  <UploadImage setImageUpload={setImageUpload} />
                 </Grid>
               </Grid>
 

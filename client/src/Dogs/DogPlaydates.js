@@ -1,5 +1,6 @@
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import GavelIcon from "@mui/icons-material/Gavel";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PersonIcon from "@mui/icons-material/Person";
 import {
@@ -141,6 +142,20 @@ const DogPlaydates = ({ playdate, setPlaydates }) => {
             </Typography>
           </Box>
         </Grid>
+      </Grid>
+      <Grid container>
+        <GavelIcon sx={{ color: "#D09D7C" }} />
+
+        <Typography variant="h6" color="#725A56" sx={{ marginLeft: "1rem" }}>
+          {playdate.age_limit ? `Age: ${playdate.age_limit}` : "None"}
+        </Typography>
+
+        <Typography variant="h6" color="#725A56" sx={{ marginLeft: "1rem" }}>
+          {playdate.size_limit ? `Size: ${playdate.size_limit}` : "None"}
+        </Typography>
+        <Typography variant="h6" color="#725A56" sx={{ marginLeft: "1rem" }}>
+          Dogs: {playdate.playdate_size_limit}
+        </Typography>
       </Grid>
       <Grid container justifyContent="center">
         {playdate.dogs.map((dog) => (

@@ -73,7 +73,7 @@ function App() {
   // for debugging when creating controller
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`playdates?dog_id=${1}`);
+      const response = await fetch(`comments?playdate_id=${1}`);
       const json = await response.json();
       console.log(json);
     };

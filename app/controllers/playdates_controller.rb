@@ -1,13 +1,32 @@
+require_relative "../services/gcs_client"
+
 class PlaydatesController < ApplicationController
   before_action :authorize 
   def index
-    if playdate_params[:dog_id] 
-      playdates = Playdate.where(dog_id: playdate_params[:dog_id])
-      render json: playdates, status: :ok
+    gcs_client = GcsClient.new()
+    playdates = if playdate_params[:dog_id]
+      Playdate.where(dog_id: playdate_params[:dog_id])
+    elsif playdate_params[:owner_id]
+      owner_id = params[:owner_id]
+
+      Playdate
+        .left_outer_joins(:rsvps, :dogs)
+        .where("playdates.owner_id = ? OR rsvps.dog_id IN (SELECT dogs.id FROM dogs WHERE dogs.owner_id = ?)", owner_id, owner_id)
+         .distinct
     else
-      playdates = Playdate.all
-      render json: playdates, status: :ok
+      Playdate.all
     end
+  
+    playdates = playdates.map do |playdate|
+      playdate.dogs.map do |dog|
+        dog.image = gcs_client.get_read_url(dog.image)
+        dog
+      end
+  
+      playdate
+    end
+  
+    render json: playdates, status: :ok
   end
 
   def create

@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 2024_01_25_192623) do
     t.index ["owner_id"], name: "index_playdates_on_owner_id"
   end
 
-  create_table "rsvps", id: false, force: :cascade do |t|
+  create_table "rsvps", force: :cascade do |t|
     t.bigint "dog_id", null: false
     t.bigint "playdate_id", null: false
     t.string "note"
