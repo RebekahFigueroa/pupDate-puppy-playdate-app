@@ -42,6 +42,7 @@ class DogsController < ApplicationController
 
   def create
     dog = Dog.create!(dog_params)
+    dog.image = GcsClient.new().get_read_url(dog.image)
     render json: dog, status: :created 
   end 
 

@@ -151,6 +151,18 @@ const PlaydateCard = ({ dogs, playdate, setPlaydates }) => {
     );
   };
 
+  const handleEditPlaydate = (playdate) => {
+    setPlaydates((prevPlaydates) =>
+      prevPlaydates.reduce(
+        (all, current) => [
+          ...all,
+          current.id === playdate.id ? playdate : current,
+        ],
+        []
+      )
+    );
+  };
+
   return (
     <Grid
       container
@@ -296,12 +308,16 @@ const PlaydateCard = ({ dogs, playdate, setPlaydates }) => {
           playdate={playdate}
           onDeleteRsvp={handleDeleteRsvp}
           onDeletePlaydate={handleDeletePlaydate}
+          onEditPlaydate={handleEditPlaydate}
         />
       </Grid>
 
       <Grid item xs={7}>
         <Grid container>
-          <Grid item sx={{ overflow: "auto", maxHeight: "20rem" }}>
+          <Grid
+            item
+            sx={{ overflow: "auto", maxHeight: "20rem", width: "100%" }}
+          >
             {rsvps
               .filter((rsvp) => rsvp.note.trim() !== "")
               .map((rsvp) => (

@@ -5,7 +5,10 @@ class PlaydatesController < ApplicationController
   def index
     gcs_client = GcsClient.new()
     playdates = if playdate_params[:dog_id]
-      Playdate.where(dog_id: playdate_params[:dog_id])
+      Playdate
+        .left_outer_joins(:rsvps)
+        .where("rsvps.dog_id  = ?", playdate_params[:dog_id])
+        .distinct
     elsif playdate_params[:owner_id]
       owner_id = params[:owner_id]
 
@@ -38,7 +41,7 @@ class PlaydatesController < ApplicationController
     playdate = current_owner.playdates.find(params[:id])
     if playdate
       if playdate.update!(playdate_params)
-        render json: playadte
+        render json: playdate
       else
         render json: { error: "Failed to update the playdate", errors: review.errors.full_messages }, status: :unprocessable_entity
       end
@@ -56,7 +59,7 @@ class PlaydatesController < ApplicationController
   private
 
   def  playdate_params
-      params.permit(:owner_id, :location, :date, :time, :size_limit, :age_limit, :playdate_size_limit)
+      params.permit(:dog_id, :owner_id, :location, :date, :time, :size_limit, :age_limit, :playdate_size_limit)
   end
 
   def authorize 

@@ -397,33 +397,22 @@ const Playdates = () => {
               <DialogActions
                 sx={{
                   backgroundColor: "#F0E6D2",
+                  justifyContent: "center",
                 }}
               >
-                <Grid
-                  container
-                  justifyContent="center"
+                <Button
+                  onClick={handleSubmit}
+                  size="large"
                   sx={{
                     backgroundColor: "#D09D7C",
-                    color: "#FFFFFF",
-                    marginBottom: "2rem",
                     width: "50%",
+                    marginBottom: "2rem",
+                    color: "#FFFFFF",
                     borderRadius: 10,
                   }}
                 >
-                  <Button
-                    onClick={handleSubmit}
-                    size="large"
-                    sx={{
-                      backgroundColor: "#D09D7C",
-                      color: "#FFFFFF",
-                      marginBottom: "2rem",
-                      width: "50%",
-                      borderRadius: 10,
-                    }}
-                  >
-                    Create Playdate
-                  </Button>
-                </Grid>
+                  Create Playdate
+                </Button>
               </DialogActions>
             </Dialog>
           </Box>
