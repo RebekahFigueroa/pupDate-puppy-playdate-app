@@ -42,7 +42,7 @@ rsvp10 = Rsvp.create(dog_id: dog7.id, playdate_id: playdate4.id, note: "So excit
 rsvp11 = Rsvp.create(dog_id: dog10.id, playdate_id: playdate4.id, note: "What's the easiest way to get there?")
 rsvp12 = Rsvp.create(dog_id: dog7.id, playdate_id: playdate5.id, note: "Do you think it might rain that day?")
 
-comment1 = Comment.create!(owner_id: owner1.id, playdate_id: playdate1.id, text: "I'm so excited for this event!")
+comment1 = Comment.create(owner_id: owner1.id, playdate_id: playdate1.id, text: "I'm so excited for this event!")
 comment2 = Comment.create(owner_id: owner5.id, playdate_id: playdate1.id, text: "My dog has been wagging his tail in excitment")
 comment3 = Comment.create(owner_id: owner5.id, playdate_id: playdate1.id, text: "Any concerns about the weather?")
 comment4 = Comment.create(owner_id: owner1.id, playdate_id: playdate1.id, text: "I think it should be fine!")
@@ -61,3 +61,5 @@ comment16 = Comment.create(owner_id: owner4.id, playdate_id: playdate4.id, text:
 comment17 = Comment.create(owner_id: owner3.id, playdate_id: playdate4.id, text: "So glad the park won't be empty for once")
 comment18 = Comment.create(owner_id: owner5.id, playdate_id: playdate4.id, text: "I agree, the more dogs the better!")
 comment19 = Comment.create(owner_id: owner4.id, playdate_id: playdate4.id, text: "Weather looks great this day!")
+
+puts "✍🏻🗒️ DB seeded!"
