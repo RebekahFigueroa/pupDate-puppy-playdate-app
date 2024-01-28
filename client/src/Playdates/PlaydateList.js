@@ -48,7 +48,7 @@ const PlaydateList = ({ dogs, playdate, setPlaydates }) => {
     const rsvp = await response.json();
 
     if (!rsvp?.dog?.id) {
-      // show an error
+      alert(rsvp.errors.join(", "));
       return;
     }
 

@@ -78,7 +78,7 @@ const PlaydateCard = ({ dogs, playdate, setPlaydates }) => {
     const comment = await response.json();
 
     if (!comment?.playdate?.id) {
-      // show an error
+      alert(comment.errors.join(", "));
       return;
     }
 
@@ -115,7 +115,7 @@ const PlaydateCard = ({ dogs, playdate, setPlaydates }) => {
     const rsvp = await response.json();
 
     if (!rsvp?.dog?.id) {
-      // show an error
+      alert(rsvp.errors.join(", "));
       return;
     }
 

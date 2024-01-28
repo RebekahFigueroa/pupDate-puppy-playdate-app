@@ -148,8 +148,12 @@ const CardButtons = ({
       }),
     });
     const playdateEdit = await response.json();
-    onEditPlaydate(playdateEdit);
-    handleCloseEditPlaydate();
+    if (!playdateEdit.error) {
+      onEditPlaydate(playdateEdit);
+      handleCloseEditPlaydate();
+    } else {
+      alert(playdateEdit.errors.join(", "));
+    }
   };
 
   return (

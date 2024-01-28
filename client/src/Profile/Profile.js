@@ -134,18 +134,22 @@ const Profile = () => {
     });
     const dog = await response.json();
 
-    setDogs((dogs) => [...dogs, dog]);
-    setFormData({
-      name: "",
-      age: "",
-      breed: "",
-      gender: "",
-      size: "",
-      description: "",
-      image: "",
-      owner_id: ownerId,
-    });
-    handleCloseCreateDog();
+    if (!dog.errors) {
+      setDogs((dogs) => [...dogs, dog]);
+      setFormData({
+        name: "",
+        age: "",
+        breed: "",
+        gender: "",
+        size: "",
+        description: "",
+        image: "",
+        owner_id: ownerId,
+      });
+      handleCloseCreateDog();
+    } else {
+      alert(dog.errors.join(", "));
+    }
   };
 
   const fetchDogs = useCallback(async () => {

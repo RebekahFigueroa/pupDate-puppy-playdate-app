@@ -143,17 +143,21 @@ const Playdates = () => {
     });
     const playdate = await response.json();
 
-    setPlaydates((playdates) => [...playdates, playdate]);
-    setFormData({
-      location: "",
-      date: "",
-      time: "",
-      size_limit: "",
-      age_limit: "",
-      playdate_size_limit: "",
-      owner_id: ownerId,
-    });
-    handleCloseCreatePlaydate();
+    if (!playdate.errors) {
+      setPlaydates((playdates) => [...playdates, playdate]);
+      setFormData({
+        location: "",
+        date: "",
+        time: "",
+        size_limit: "",
+        age_limit: "",
+        playdate_size_limit: "",
+        owner_id: ownerId,
+      });
+      handleCloseCreatePlaydate();
+    } else {
+      alert(playdate.errors.join(", "));
+    }
   };
 
   return (

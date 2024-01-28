@@ -62,6 +62,7 @@ const DogPlaydates = ({ playdate, setPlaydates }) => {
 
     if (!rsvp?.dog?.id) {
       // show an error
+      alert(rsvp.errors.join(", "));
       return;
     }
 
