@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -39,11 +40,14 @@ const Playdates = () => {
   const { isAuthed: ownerId } = useAuthContext();
   const [dogs, setDogs] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
+    setIsLoading(true);
     const fetchDogs = async () => {
       const response = await fetch(`/dogs?owner_id=${ownerId}`);
       const data = await response.json();
       setDogs(data);
+      setIsLoading(false);
     };
 
     fetchDogs();
@@ -431,6 +435,11 @@ const Playdates = () => {
             justifyContent: "center",
           }}
         >
+          {isLoading && (
+            <Grid container justifyContent="center" mt={1}>
+              <CircularProgress />
+            </Grid>
+          )}
           <Grid item>
             {playdates.map((playdate) => (
               <Grid item key={playdate.id}>

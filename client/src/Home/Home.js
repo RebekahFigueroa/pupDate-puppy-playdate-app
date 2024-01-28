@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { CircularProgress, Grid, Typography } from "@mui/material";
 
 import React, { useEffect, useState } from "react";
 import Footer from "../NavBar and Footer/Footer";
@@ -10,11 +10,14 @@ const Home = () => {
   const { isAuthed: ownerId } = useAuthContext();
   const [dogs, setDogs] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
+    setIsLoading(true);
     const fetchDogs = async () => {
       const response = await fetch(`/dogs?owner_id=${ownerId}`);
       const data = await response.json();
       setDogs(data);
+      setIsLoading(false);
     };
 
     fetchDogs();
@@ -22,10 +25,12 @@ const Home = () => {
 
   const [playdates, setPlaydates] = useState([]);
   useEffect(() => {
+    setIsLoading(true);
     const fetchPlaydates = async () => {
       const response = await fetch(`/playdates?owner_id=${ownerId}`);
       const data = await response.json();
       setPlaydates(data);
+      setIsLoading(false);
     };
 
     fetchPlaydates();
@@ -48,6 +53,11 @@ const Home = () => {
             justifyContent: "center",
           }}
         >
+          {isLoading && (
+            <Grid container justifyContent="center" mt={1}>
+              <CircularProgress />
+            </Grid>
+          )}
           <Grid item>
             {playdates.map((playdate) => (
               <Grid item key={playdate.id}>

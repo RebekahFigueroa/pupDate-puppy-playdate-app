@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -36,11 +37,14 @@ const Profile = () => {
   const [imageUpload, setImageUpload] = useState();
 
   const [dogs, setDogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
+    setIsLoading(true);
     const fetchDogs = async () => {
       const response = await fetch(`/dogs?owner_id=${ownerId}`);
       const data = await response.json();
       setDogs(data);
+      setIsLoading(false);
     };
 
     fetchDogs();
@@ -178,6 +182,7 @@ const Profile = () => {
         <Typography gutterBottom variant="h1" component="div" color={"#D09D7C"}>
           <strong> Your Pups </strong>
         </Typography>
+
         <Grid container justifyContent="center">
           <Button
             size="large"
@@ -191,6 +196,11 @@ const Profile = () => {
           >
             Add a Pup
           </Button>
+          {isLoading && (
+            <Grid container justifyContent="center" mt={1}>
+              <CircularProgress />
+            </Grid>
+          )}
           <Dialog
             closeButton
             open={openCreateDog}
