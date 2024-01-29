@@ -37,35 +37,39 @@ const PlaydateList = ({ dogs, playdate, setPlaydates }) => {
   });
 
   const handleSubmit = async () => {
-    const response = await fetch(`/rsvps`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    try {
+      const response = await fetch(`/rsvps`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    const rsvp = await response.json();
+      const rsvp = await response.json();
 
-    if (!rsvp?.dog?.id) {
-      alert(rsvp.errors.join(", "));
-      return;
-    }
-
-    setFormData({
-      note: "",
-      playdate_id: playdate.id,
-      dog_id: "",
-    });
-
-    setPlaydates((playdates) => {
-      const editedPlaydate = playdates.find((p) => p.id === playdate.id);
-      if (editedPlaydate) {
-        editedPlaydate.dogs.push(rsvp.dog);
+      if (rsvp.error && rsvp.error.length > 0) {
+        alert(rsvp.error.join(", "));
+        return;
       }
 
-      return [...playdates];
-    });
+      setFormData({
+        note: "",
+        playdate_id: playdate.id,
+        dog_id: "",
+      });
+
+      setPlaydates((playdates) => {
+        const editedPlaydate = playdates.find((p) => p.id === playdate.id);
+        if (editedPlaydate) {
+          editedPlaydate.dogs.push(rsvp.dog);
+        }
+
+        return [...playdates];
+      });
+    } catch (error) {
+      console.error("Error in handleSubmit:", error);
+    }
   };
 
   const myDogs = dogs.filter(

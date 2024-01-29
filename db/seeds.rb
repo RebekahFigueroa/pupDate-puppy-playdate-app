@@ -24,9 +24,9 @@ dog9 = Dog.create(owner_id: owner5.id, name: "Spot", age:"Adult", breed:"Labrado
 dog10 = Dog.create(owner_id: owner5.id, name: "Manny", age:"Senior", breed:"Corgie", gender: "male", size:"medium", description:"Jumps everywhere!", image: "https://mymodernmet.com/wp/wp-content/uploads/2020/10/cooper-baby-corgi-dogs-8.jpg")
 
 playdate1 = Playdate.create(owner_id: owner1.id, location: "Northwood Estate Dog Park", date: "2024-02-20", time: "09:30 AM", size_limit:"small", age_limit:"Puppy", playdate_size_limit: 5)
-playdate2 = Playdate.create(owner_id: owner2.id, location: "Northwood Estate Dog Park", date: "2024-02-14", time: "09:30 PM", size_limit:"none", age_limit:"Senior", playdate_size_limit: 10)
+playdate2 = Playdate.create(owner_id: owner2.id, location: "Northwood Estate Dog Park", date: "2024-02-14", time: "09:30 PM", size_limit:"None", age_limit:"Senior", playdate_size_limit: 10)
 playdate3 = Playdate.create(owner_id: owner5.id, location: "Domain Central Bark", date: "2024-02-01", time: "10:30 AM", size_limit:"large", age_limit:"Adult", playdate_size_limit: 3)
-playdate4 = Playdate.create(owner_id: owner4.id, location: "Northwood Estate Dog Park", date: "2024-02-07", time: "06:30 PM", size_limit:"none", age_limit:"none", playdate_size_limit: 20)
+playdate4 = Playdate.create(owner_id: owner4.id, location: "Northwood Estate Dog Park", date: "2024-02-07", time: "06:30 PM", size_limit:"None", age_limit:"None", playdate_size_limit: 20)
 playdate5 = Playdate.create(owner_id: owner4.id, location: "Dog Park Blue", date: "2024-02-29", time: "11:30 AM", size_limit:"medium", age_limit:"Adult", playdate_size_limit: 5)
 
 rsvp1 = Rsvp.create(dog_id: dog1.id, playdate_id: playdate1.id, note: "Excited to meet everyone!")
