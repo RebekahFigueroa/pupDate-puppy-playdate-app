@@ -97,4 +97,5 @@ Currently under development and deployed.
 
 # Supplemental links
 
-TBD
+How to add error handling requirements to an event in Ruby on Rails:
+https://medium.com/@figueroarebekah/how-to-add-error-handling-requirements-to-an-event-in-ruby-on-rails-2be8b5a61947
