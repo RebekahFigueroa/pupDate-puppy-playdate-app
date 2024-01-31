@@ -10,13 +10,16 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { useAuthContext } from "../contexts/AuthContext";
 
 const ProfileCard = ({ dog, setDogs }) => {
+  const { checkPermissions } = useAuthContext();
   const handleDelete = () => {
     fetch(`/dogs/${dog.id}`, {
       method: "DELETE",
     }).then(() => {
       setDogs((dogs) => dogs.filter((d) => d.id !== dog.id));
+      checkPermissions();
     });
   };
 

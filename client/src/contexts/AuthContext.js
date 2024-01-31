@@ -9,6 +9,18 @@ const AuthContext = createContext({
 export const AuthProvider = ({ children }) => {
   const [isAuthed, setIsAuthed] = useState(undefined);
 
+  const [hasDogs, setHasDogs] = useState(false);
+
+  const checkPermissions = async () => {
+    if (!isAuthed) {
+      return;
+    }
+
+    const response = await fetch(`/owners/${isAuthed}`);
+    const data = await response.json();
+    setHasDogs(data.dogs.length > 0);
+  };
+
   useEffect(() => {
     const auth = async () => {
       const response = await fetch("/auth");
@@ -19,6 +31,10 @@ export const AuthProvider = ({ children }) => {
 
     auth();
   }, []);
+
+  useEffect(() => {
+    checkPermissions();
+  }, [isAuthed]);
 
   const login = async (username, password) => {
     const response = await fetch("/login", {
@@ -59,7 +75,16 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthed, login, logout, create_owner }}>
+    <AuthContext.Provider
+      value={{
+        isAuthed,
+        login,
+        logout,
+        create_owner,
+        hasDogs,
+        checkPermissions,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

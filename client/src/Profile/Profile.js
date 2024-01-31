@@ -33,7 +33,7 @@ const commonStyle = {
 
 const Profile = () => {
   const [openCreateDog, setOpenCreateDog] = useState(false);
-  const { isAuthed: ownerId } = useAuthContext();
+  const { isAuthed: ownerId, checkPermissions } = useAuthContext();
   const [imageUpload, setImageUpload] = useState();
 
   const [dogs, setDogs] = useState([]);
@@ -151,6 +151,7 @@ const Profile = () => {
         owner_id: ownerId,
       });
       handleCloseCreateDog();
+      checkPermissions();
     } else {
       alert(dog.errors.join(", "));
     }
@@ -179,10 +180,22 @@ const Profile = () => {
     <>
       <NavBar />
       <Grid container justifyContent="center" backgroundColor="#E9EBF1">
-        <Typography gutterBottom variant="h1" component="div" color={"#D09D7C"}>
-          <strong> Your Pups </strong>
-        </Typography>
-
+        <stack>
+          <Typography
+            variant="h1"
+            component="div"
+            color={"#D09D7C"}
+            sx={{ textAlign: "center" }}
+          >
+            <strong> Your Pups </strong>
+          </Typography>
+          <Typography gutterBottom variant="h6" color="#725A56">
+            <strong>
+              {" "}
+              Add a pup to gain access to additional features on the site!{" "}
+            </strong>
+          </Typography>
+        </stack>
         <Grid container justifyContent="center">
           <Button
             size="large"

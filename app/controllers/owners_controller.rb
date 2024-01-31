@@ -1,6 +1,11 @@
 class OwnersController < ApplicationController
   skip_before_action :isAuthorized, only: :create
 
+  def index
+    owner = Owner.find(params[:id])
+    render json: owner, status: :ok
+  end
+
   def create
       @owner = Owner.create!(owner_params)
       login_owner

@@ -55,7 +55,7 @@ const BodyContent = () => {
     <>
       <Box sx={{ height: "100vh" }}>
         <Routes>
-          <Route path="/" Component={isAuthed ? Home : Login} exact />
+          <Route path="/" Component={isAuthed ? Profile : Login} exact />
           <Route path="/home" Component={Home} />
           <Route path="/playdates" Component={Playdates} />
           <Route path="/profile" Component={Profile} />

@@ -19,6 +19,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import Footer from "../NavBar and Footer/Footer";
 import NavBar from "../NavBar and Footer/NavBar";
@@ -268,6 +269,7 @@ const Playdates = () => {
                         label="Select Date"
                         value={formData.date}
                         onChange={handleDateChange}
+                        minDate={dayjs()}
                         sx={{
                           borderRadius: "100px",
                           backgroundColor: "#FFFFFF",
