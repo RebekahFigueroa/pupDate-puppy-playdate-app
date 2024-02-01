@@ -118,7 +118,7 @@ const PlaydateCard = ({ dogs, playdate, setPlaydates }) => {
       return;
     }
 
-    setFormData({
+    setFormDataRsvp({
       note: "",
       playdate_id: playdate.id,
       dog_id: "",
@@ -132,6 +132,8 @@ const PlaydateCard = ({ dogs, playdate, setPlaydates }) => {
 
       return [...playdates];
     });
+
+    setRsvps((rsvps) => [...rsvps, rsvp]);
   };
 
   const myDogs = dogs.filter(
