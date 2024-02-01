@@ -102,7 +102,7 @@ const CardButtons = ({
   const handleTimeChange = (time) => {
     setFormData({
       ...formData,
-      time: time.toISOString(),
+      time: time.toDate().toLocaleTimeString(),
     });
   };
 
@@ -222,7 +222,9 @@ const CardButtons = ({
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <TimePicker
                       label="Select Time"
-                      value={new Date(formData.time)}
+                      value={dayjs(
+                        new Date().toDateString() + " " + formData.time
+                      )} //formData.time}
                       onChange={handleTimeChange}
                       sx={{
                         borderRadius: "100px",
