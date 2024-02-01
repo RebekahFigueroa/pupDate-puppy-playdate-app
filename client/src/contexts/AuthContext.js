@@ -61,8 +61,10 @@ export const AuthProvider = ({ children }) => {
     const owner = await response.json();
     if (owner.id) {
       setIsAuthed(owner?.id);
+      return true;
     } else {
       alert(owner.errors.join(", "));
+      return false;
     }
   };
 

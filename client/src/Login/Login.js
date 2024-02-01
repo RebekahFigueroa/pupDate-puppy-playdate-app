@@ -264,19 +264,21 @@ const Login = () => {
                         marginBottom: "2rem",
                         width: "50%",
                       }}
-                      onClick={() => {
-                        create_owner(
+                      onClick={async () => {
+                        const succeeded = await create_owner(
                           formDataCreate.username,
                           formDataCreate.password,
                           formDataCreate.city,
                           formDataCreate.zipcode
                         );
-                        setFormDataCreate({
-                          username: "",
-                          password: "",
-                          ciy: "",
-                          zipcode: "",
-                        });
+                        if (succeeded) {
+                          setFormDataCreate({
+                            username: "",
+                            password: "",
+                            ciy: "",
+                            zipcode: "",
+                          });
+                        }
                       }}
                     >
                       Sign Up
