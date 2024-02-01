@@ -148,24 +148,23 @@ const DogCard = ({ dog }) => {
               >
                 <strong>{dog.name}'s Playdates</strong>
               </DialogTitle>
-              {isLoading && (
-                <Grid
-                  container
-                  justifyContent="center"
-                  mt={1}
-                  sx={{
-                    backgroundColor: "#F0E6D2",
-                  }}
-                >
-                  <CircularProgress />
-                </Grid>
-              )}
               <DialogContent
                 sx={{
                   backgroundColor: "#F0E6D2",
                 }}
               >
-                {playdates.length > 0 && !isLoading ? (
+                {isLoading ? (
+                  <Grid
+                    container
+                    justifyContent="center"
+                    mt={1}
+                    sx={{
+                      backgroundColor: "#F0E6D2",
+                    }}
+                  >
+                    <CircularProgress />
+                  </Grid>
+                ) : playdates.length > 0 ? (
                   playdates.map((playdate) => (
                     <Grid item key={playdate.id}>
                       <DogPlaydates
