@@ -6,6 +6,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  CircularProgress,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -17,12 +18,16 @@ import DogPlaydates from "./DogPlaydates";
 
 const DogCard = ({ dog }) => {
   const [openViewDogs, setOpenViewDogs] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
   const [playdates, setPlaydates] = useState([]);
   useEffect(() => {
+    setIsLoading(true);
     const fetchPlaydates = async () => {
       const response = await fetch(`/playdates?dog_id=${dog.id}`);
       const data = await response.json();
       setPlaydates(data);
+      setIsLoading(false);
     };
 
     fetchPlaydates();
@@ -143,19 +148,30 @@ const DogCard = ({ dog }) => {
               >
                 <strong>{dog.name}'s Playdates</strong>
               </DialogTitle>
+              {isLoading && (
+                <Grid container justifyContent="center" mt={1}>
+                  <CircularProgress />
+                </Grid>
+              )}
               <DialogContent
                 sx={{
                   backgroundColor: "#F0E6D2",
                 }}
               >
-                {playdates.map((playdate) => (
-                  <Grid item key={playdate.id}>
-                    <DogPlaydates
-                      playdate={playdate}
-                      setPlaydates={setPlaydates}
-                    />
-                  </Grid>
-                ))}
+                {playdates.length > 0 ? (
+                  playdates.map((playdate) => (
+                    <Grid item key={playdate.id}>
+                      <DogPlaydates
+                        playdate={playdate}
+                        setPlaydates={setPlaydates}
+                      />
+                    </Grid>
+                  ))
+                ) : (
+                  <Typography gutterBottom variant="h6" color="#725A56">
+                    <strong>This pup doesn't have any playdates yet! </strong>
+                  </Typography>
+                )}
               </DialogContent>
             </Dialog>
           </Grid>

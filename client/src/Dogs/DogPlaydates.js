@@ -31,6 +31,7 @@ const commonStyle = {
 
 const DogPlaydates = ({ playdate, setPlaydates }) => {
   const { isAuthed: ownerId } = useAuthContext();
+
   const [dogs, setDogs] = useState([]);
   useEffect(() => {
     const fetchDogs = async () => {
