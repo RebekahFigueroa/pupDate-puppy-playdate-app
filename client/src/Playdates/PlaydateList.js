@@ -127,7 +127,7 @@ const PlaydateList = ({ dogs, playdate, setPlaydates }) => {
               color="#725A56"
               sx={{ marginLeft: "0.5rem" }}
             >
-              {moment(playdate.time).utc().format("h:mm A")}
+              {moment(playdate.time).format("h:mm A")}
             </Typography>
           </Box>
         </Grid>

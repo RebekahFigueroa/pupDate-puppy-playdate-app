@@ -59,15 +59,25 @@ const Home = () => {
             </Grid>
           )}
           <Grid item>
-            {playdates.map((playdate) => (
-              <Grid item key={playdate.id}>
-                <PlaydateCard
-                  dogs={dogs}
-                  playdate={playdate}
-                  setPlaydates={setPlaydates}
-                />
-              </Grid>
-            ))}
+            {playdates.length > 0 ? (
+              // Render this if playdates array has items
+              playdates.map((playdate) => (
+                <Grid item key={playdate.id}>
+                  <PlaydateCard
+                    dogs={dogs}
+                    playdate={playdate}
+                    setPlaydates={setPlaydates}
+                  />
+                </Grid>
+              ))
+            ) : (
+              // Render this if playdates array is empty
+              <Typography gutterBottom variant="h6" color="#725A56">
+                <strong>
+                  Join a playdate or create your own to view playdates!
+                </strong>
+              </Typography>
+            )}
           </Grid>
         </Grid>
       </Grid>
