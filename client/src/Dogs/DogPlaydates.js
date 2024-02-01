@@ -14,7 +14,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useAuthContext } from "../contexts/AuthContext";
 import DogList from "./DogList";
@@ -138,7 +137,7 @@ const DogPlaydates = ({ playdate, setPlaydates }) => {
               color="#725A56"
               sx={{ marginLeft: "0.5rem" }}
             >
-              {moment(playdate.time).utc().format("h:mm A")}
+              {playdate.time}
             </Typography>
           </Box>
         </Grid>

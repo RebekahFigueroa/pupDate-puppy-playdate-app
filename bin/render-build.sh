@@ -9,5 +9,5 @@ cp -a client/build/. public/
 
 # builds the back end code
 bundle install
-DISABLE_DATABASE_ENVIRONMENT_CHECK=1 rails db:reset 
-# rails db:migrate
+# DISABLE_DATABASE_ENVIRONMENT_CHECK=1 rails db:reset 
+rails db:migrate
