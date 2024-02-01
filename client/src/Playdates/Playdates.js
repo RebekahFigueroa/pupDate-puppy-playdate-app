@@ -104,7 +104,7 @@ const Playdates = () => {
   const handleTimeChange = (time) => {
     setFormData({
       ...formData,
-      time,
+      time: time.toDate().toLocaleTimeString(),
     });
   };
 

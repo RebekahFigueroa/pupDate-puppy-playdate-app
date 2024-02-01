@@ -14,7 +14,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import moment from "moment-timezone";
 import React, { useState } from "react";
 import DogList from "../Dogs/DogList";
 
@@ -127,9 +126,7 @@ const PlaydateList = ({ dogs, playdate, setPlaydates }) => {
               color="#725A56"
               sx={{ marginLeft: "0.5rem" }}
             >
-              {moment(playdate.time)
-                .tz(Intl.DateTimeFormat().resolvedOptions().timeZone)
-                .format("h:mm A")}
+              {playdate.time}
             </Typography>
           </Box>
         </Grid>

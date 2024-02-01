@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_25_192623) do
+ActiveRecord::Schema.define(version: 2024_02_01_180740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 2024_01_25_192623) do
   create_table "playdates", force: :cascade do |t|
     t.bigint "owner_id", null: false
     t.string "location"
-    t.datetime "time"
+    t.string "time"
     t.datetime "date"
     t.string "size_limit"
     t.string "age_limit"
