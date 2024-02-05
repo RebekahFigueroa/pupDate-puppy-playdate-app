@@ -117,6 +117,7 @@ const Login = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          position: "relative",
         }}
       >
         <Box
@@ -125,6 +126,43 @@ const Login = () => {
           alt="dogs playing"
           sx={{ height: "100%", margin: "0", padding: "0" }}
         />
+        <Box>
+          <Typography
+            gutterBottom
+            variant="h1"
+            component="div"
+            color={"#90AD67"}
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              paddingTop: "30rem",
+              paddingLeft: "11rem",
+              fontSize: "8rem",
+              textShadow: "2px 2px 2px #fff",
+            }}
+          >
+            <strong> pupDates </strong>
+          </Typography>
+          <Typography
+            gutterBottom
+            variant="h4"
+            component="div"
+            color={"#725A56"}
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              paddingTop: "39rem",
+              paddingLeft: "14.5rem",
+              fontFamily: "cursive",
+              letterSpacing: "0.1em",
+              textShadow: "1px 1px 1px #fff",
+            }}
+          >
+            <strong> for our four-legged friends! </strong>
+          </Typography>
+        </Box>
       </Grid>
       <Grid
         container
